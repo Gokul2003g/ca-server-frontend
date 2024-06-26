@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from 'axios'
 import { useForm } from "react-hook-form"
@@ -21,6 +22,7 @@ import { Textarea } from "./components/ui/textarea"
 function App() {
 
   const SERVER_URI = import.meta.env.VITE_SERVER_URI;
+  const [certificate, setCertificate] = useState<string>("");
 
   const formSchema = z.object({
     public_key: z.string(),
@@ -37,13 +39,12 @@ function App() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const response = await axios.post(SERVER_URI + "handle-post/", values)
+    const cert = response.data;
+    setCertificate(cert)
+    console.log(cert)
     console.log(values);
-  }
-
-  const generateCertificate = (publicKey: string) => {
-
   }
 
   const downloadHostSignKey = async () => {
@@ -132,7 +133,7 @@ function App() {
       <Separator className="my-16 w-4/5 bg-black" />
       <div className="w-3/4">
         <Label className="text-3xl">Get Certificate Here</Label>
-        <Textarea className="my-8 text-xl" placeholder="Upload your public key to be signed" />
+        <Textarea className="my-8 text-sm h-36" readOnly value={certificate} placeholder="Upload your public key to be signed" />
         <Button>Download Certificate</Button>
       </div>
       <Separator className="my-16 w-4/5 bg-black" />
