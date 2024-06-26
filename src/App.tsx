@@ -1,3 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod"
+import axios from 'axios'
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { Button } from "./components/ui/button"
 import {
   Form,
   FormControl,
@@ -7,15 +12,10 @@ import {
   FormLabel,
   FormMessage,
 } from "./components/ui/form"
-import { useState, ChangeEvent } from "react"
-import { Button } from "./components/ui/button"
 import { Label } from "./components/ui/label"
 import { Separator } from "./components/ui/separator"
-import { Textarea } from "./components/ui/textarea"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import { Switch } from "./components/ui/switch"
+import { Textarea } from "./components/ui/textarea"
 
 
 function App() {
@@ -46,12 +46,41 @@ function App() {
 
   }
 
-  const downloadHostSignKey = () => {
+  const downloadHostSignKey = async () => {
+    try {
+      const response = await axios.get(`${SERVER_URI}/public/host-sign-key.pub`, {
+        responseType: 'blob',
+      });
 
-  }
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'host-sign-key.pub'); // Set the desired file name
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+    }
+  };
 
-  const downloadUserSignKey = () => {
 
+  const downloadUserSignKey = async () => {
+    try {
+      const response = await axios.get(`${SERVER_URI}/public/user-sign-key.pub`, {
+        responseType: 'blob',
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'user-sign-key.pub'); // Set the desired file name
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+    }
   }
 
 
