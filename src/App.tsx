@@ -138,8 +138,8 @@ function App() {
       </div>
       <Separator className="my-16 w-4/5 bg-black" />
       <div className="w-3/4 flex justify-around">
-        <Button onClick={downloadUserSignKey}>Download User Signing Key</Button>
-        <Button onClick={downloadHostSignKey}>Download Host Signing Key</Button>
+        <Button onClick={downloadUserSignKey}>Download User Signing Public Key</Button>
+        <Button onClick={downloadHostSignKey}>Download Host Signing Public Key</Button>
       </div>
     </div >
   )
