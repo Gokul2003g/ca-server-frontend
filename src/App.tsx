@@ -110,7 +110,7 @@ function App() {
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border border-black p-4">
                   <div className="space-y-0.5">
                     <FormLabel className="text-base">
-                      Are you getting Host Certificate?
+                      Are you Host?
                     </FormLabel>
                     <FormDescription>
                       Toggle on to issue host certificate and off to issue user certificate
@@ -134,7 +134,7 @@ function App() {
       <div className="w-3/4">
         <Label className="text-3xl">Get Certificate Here</Label>
         <Textarea className="my-8 text-sm h-36" readOnly value={certificate} placeholder="Upload your public key to be signed" />
-        <Button>Download Certificate</Button>
+        {/* <Button>Download Certificate</Button> */}
       </div>
       <Separator className="my-16 w-4/5 bg-black" />
       <div className="w-3/4 flex justify-around">
