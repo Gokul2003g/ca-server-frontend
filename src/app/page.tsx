@@ -41,7 +41,6 @@ export default function Home() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(SERVER_URI);
     const response = await axios.post(SERVER_URI + "handle-post/", values)
     const cert = response.data;
     setCertificate(cert)
