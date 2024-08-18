@@ -22,7 +22,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 export default function Home() {
 
-  const SERVER_URI = process.env.SERVER_URI;
+  const SERVER_URI = process.env.NEXT_PUBLIC_SERVER_URI;
   const [certificate, setCertificate] = useState<string>("");
 
   const formSchema = z.object({
@@ -41,6 +41,7 @@ export default function Home() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(SERVER_URI);
     const response = await axios.post(SERVER_URI + "handle-post/", values)
     const cert = response.data;
     setCertificate(cert)
@@ -57,7 +58,7 @@ export default function Home() {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'host-sign-key.pub'); // Set the desired file name
+      link.setAttribute('download', 'host-sign-key.pub');
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -87,64 +88,62 @@ export default function Home() {
 
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="flex flex-col items-center py-32 bg-gray-300 min-h-screen w-full">
-        <div className="w-3/4">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="public_key"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-3xl">Upload Public Key Here</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="Upload your public key to generate certificate"  {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="is_host"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg border border-black p-4">
-                    <div className="space-y-0.5">
-                      <FormLabel className="text-base">
-                        Are you Host?
-                      </FormLabel>
-                      <FormDescription>
-                        Toggle on to issue host certificate and off to issue user certificate
-                      </FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">Generate Certificate</Button>
-            </form>
-          </Form>
+    <div className="flex flex-col items-center py-32 bg-gray-300 min-h-screen w-full">
+      <div className="w-3/4">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="public_key"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-3xl">Upload Public Key Here</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Upload your public key to generate certificate"  {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="is_host"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border border-black p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">
+                      Are you Host?
+                    </FormLabel>
+                    <FormDescription>
+                      Toggle on to issue host certificate and off to issue user certificate
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Generate Certificate</Button>
+          </form>
+        </Form>
 
-        </div>
-        <Separator className="my-16 w-4/5 bg-black" />
-        <div className="w-3/4">
-          <Label className="text-3xl">Get Certificate Here</Label>
-          <Textarea className="my-8 text-sm h-36" readOnly value={certificate} placeholder="Upload your public key to be signed" />
-          {/* <Button>Download Certificate</Button> */}
-        </div>
-        <Separator className="my-16 w-4/5 bg-black" />
-        <div className="w-3/4 flex justify-around">
-          <Button onClick={downloadUserSignKey}>Download User Signing Public Key</Button>
-          <Button onClick={downloadHostSignKey}>Download Host Signing Public Key</Button>
-        </div>
-      </div >
-    </main>
+      </div>
+      <Separator className="my-16 w-4/5 bg-black" />
+      <div className="w-3/4">
+        <Label className="text-3xl">Get Certificate Here</Label>
+        <Textarea className="my-8 text-sm h-36" readOnly value={certificate} placeholder="Upload your public key to be signed" />
+        {/* <Button>Download Certificate</Button> */}
+      </div>
+      <Separator className="my-16 w-4/5 bg-black" />
+      <div className="w-3/4 flex justify-around">
+        <Button onClick={downloadUserSignKey}>Download User Signing Public Key</Button>
+        <Button onClick={downloadHostSignKey}>Download Host Signing Public Key</Button>
+      </div>
+    </div >
   )
 }
 
