@@ -19,7 +19,7 @@ import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import Image from "next/image"
-import { SignOut } from "@/components/signout-button"
+import { SignOut } from "@/components/SignOutButton"
 import { UserAvatar } from "@/components/UserAvatar"
 import { useSession } from "next-auth/react"
 
@@ -94,7 +94,7 @@ export default function MainContent() {
     <>
       <nav className="px-8 py-6 flex justify-between items-center">
         <Image src="/sshgo_logo.jpg" alt="sshgo_logo" width={50} height={50} className="rounded-full" />
-        <div>
+        <div className="flex gap-4 justify-center items-center">
           <UserAvatar session={session} />
           <SignOut />
         </div>

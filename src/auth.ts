@@ -9,14 +9,14 @@ const providers: Provider[] = [
 
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  providers,
+  pages: {
+    signIn: "/signin",
+  },
   callbacks: {
     authorized: async ({ auth }) => {
       return !!auth
     },
-  },
-  providers,
-  pages: {
-    signIn: "/signin",
   },
 })
 
