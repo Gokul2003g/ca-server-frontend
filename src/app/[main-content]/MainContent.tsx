@@ -22,6 +22,7 @@ import Image from "next/image"
 import { SignOut } from "@/components/SignOutButton"
 import { UserAvatar } from "@/components/UserAvatar"
 import { useSession } from "next-auth/react"
+import { ModeToggle } from "@/components/ModeToggle"
 
 export default function MainContent() {
 
@@ -91,16 +92,17 @@ export default function MainContent() {
 
 
   return (
-    <>
+    <div className="min-h-screen">
       <nav className="px-8 py-6 flex justify-between items-center">
         <Image src="/sshgo_logo.jpg" alt="sshgo_logo" width={50} height={50} className="rounded-full" />
         <div className="flex gap-4 justify-center items-center">
+          <ModeToggle />
           <UserAvatar session={session} />
           <SignOut />
         </div>
       </nav>
       <Separator />
-      <div className="flex flex-col items-center py-32 min-h-screen w-full">
+      <div className="flex flex-col items-center py-12 ">
         <div className="w-3/4">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -156,7 +158,7 @@ export default function MainContent() {
           <Button onClick={downloadHostSignKey}>Download Host Signing Public Key</Button>
         </div>
       </div >
-    </>
+    </div>
   )
 }
 

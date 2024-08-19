@@ -1,10 +1,16 @@
+
 export function UserAvatar({ session }) {
+
+
   return (
     <div>
       <img
+        className="rounded-full"
         src={
-          session?.user?.image ?? "https://source.boringavatars.com/marble/120"
+          session?.data?.user.image ?? "/default_profile.png"
         }
+        width={50}
+        height={50}
         alt="User Avatar"
       />
     </div>
