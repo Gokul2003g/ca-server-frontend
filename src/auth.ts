@@ -14,6 +14,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/signin",
   },
   callbacks: {
+    // TODO: Rename token variable names 
     async jwt({ token, account, user }) {
       if (account) {
         token.idToken = account.access_token;

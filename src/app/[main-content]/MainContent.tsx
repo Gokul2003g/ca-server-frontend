@@ -27,6 +27,8 @@ import Loading from "../loading"
 
 export default function MainContent() {
 
+  // TODO: Remove console logs
+
   const session = useSession()
   const SERVER_URI = process.env.NEXT_PUBLIC_SERVER_URI;
   const [certificate, setCertificate] = useState<string>("");
@@ -49,7 +51,6 @@ export default function MainContent() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(session.data.idToken);
     if (!session || !session.data.idToken) {
       console.error("User is not authenticated");
       return;
