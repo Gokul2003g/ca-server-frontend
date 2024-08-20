@@ -49,12 +49,28 @@ export default function MainContent() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!session || !session.data.idToken) {
+      console.error("User is not authenticated");
+      return;
+    }
+
     values.identity = userEmail || "not_set";
-    const response = await axios.post(SERVER_URI + "handle-post/", values)
-    const cert = response.data;
-    setCertificate(cert)
-    console.log(cert)
-    console.log(values);
+
+    try {
+      const response = await axios.post(SERVER_URI + "handle-post/", values, {
+        headers: {
+          'Authorization': `Bearer ${session.data.idToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const cert = response.data;
+      setCertificate(cert)
+      console.log(cert)
+      console.log(values);
+    } catch (e) {
+      console.log("Error sending form data", e);
+    }
   }
 
   const downloadHostSignKey = async () => {
