@@ -1,6 +1,7 @@
 
 export function UserAvatar({ session }) {
 
+  console.log(session);
 
   return (
     <div>

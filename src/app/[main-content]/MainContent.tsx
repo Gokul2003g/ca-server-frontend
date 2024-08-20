@@ -23,12 +23,15 @@ import { SignOut } from "@/components/SignOutButton"
 import { UserAvatar } from "@/components/UserAvatar"
 import { useSession } from "next-auth/react"
 import { ModeToggle } from "@/components/ModeToggle"
+import Loading from "../loading"
 
 export default function MainContent() {
 
   const session = useSession()
   const SERVER_URI = process.env.NEXT_PUBLIC_SERVER_URI;
   const [certificate, setCertificate] = useState<string>("");
+
+
 
   const formSchema = z.object({
     public_key: z.string(),
@@ -41,11 +44,12 @@ export default function MainContent() {
     defaultValues: {
       public_key: "",
       is_host: false,
-      identity: "Take from auth"
+      identity: "from auth"
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    values.identity = userEmail || "not_set";
     const response = await axios.post(SERVER_URI + "handle-post/", values)
     const cert = response.data;
     setCertificate(cert)
@@ -90,6 +94,11 @@ export default function MainContent() {
     }
   }
 
+  if (session.status == "loading") {
+    return <Loading />
+  }
+
+  const userEmail = session.data?.user?.email;
 
   return (
     <div className="min-h-screen">
