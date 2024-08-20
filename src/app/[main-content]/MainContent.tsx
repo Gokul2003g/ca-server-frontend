@@ -49,6 +49,7 @@ export default function MainContent() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(session.data.idToken);
     if (!session || !session.data.idToken) {
       console.error("User is not authenticated");
       return;

@@ -16,12 +16,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, account, user }) {
       if (account) {
-        token.idToken = account.id_token;
+        token.idToken = account.access_token;
       }
       return token;
     },
     async session({ session, token }) {
-      // Include ID token and access token in the session object
+      // Include access token in the session object
       session.idToken = token.idToken;
       return session;
     },
