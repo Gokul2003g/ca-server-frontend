@@ -14,9 +14,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/signin",
   },
   callbacks: {
-    authorized: async ({ auth }) => {
-      return !!auth
+    async jwt({ token, account, user }) {
+      if (account) {
+        token.idToken = account.id_token;
+      }
+      return token;
     },
-  },
+    async session({ session, token }) {
+      // Include ID token and access token in the session object
+      session.idToken = token.idToken;
+      return session;
+    },
+    async authorized({ auth }) {
+      // Authorize based on whether auth exists
+      return !!auth;
+    }
+  }
 })
+
 
