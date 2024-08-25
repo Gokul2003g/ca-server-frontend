@@ -1,10 +1,14 @@
-"use client"
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const metadata = {
+  title: "sshgo",
+  description: "Get your certificates here.",
+};
 
 export default function RootLayout({
   children,
