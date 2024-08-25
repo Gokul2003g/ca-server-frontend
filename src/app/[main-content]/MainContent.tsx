@@ -38,7 +38,8 @@ export default function MainContent() {
   const formSchema = z.object({
     public_key: z.string(),
     is_host: z.boolean().default(false),
-    identity: z.string()
+    identity: z.string(),
+    provider: z.string()
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -46,7 +47,8 @@ export default function MainContent() {
     defaultValues: {
       public_key: "",
       is_host: false,
-      identity: "from auth"
+      identity: "",
+      provider: ""
     },
   })
 
@@ -57,6 +59,7 @@ export default function MainContent() {
     }
 
     values.identity = userEmail || "not_set";
+    values.provider = session.data.provider;
 
     try {
       const response = await axios.post(SERVER_URI + "handle-post/", values, {

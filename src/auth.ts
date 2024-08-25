@@ -18,12 +18,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token, account, user }) {
       if (account) {
         token.idToken = account.access_token;
+        token.provider = account.provider;
       }
       return token;
     },
     async session({ session, token }) {
       // Include access token in the session object
       session.idToken = token.idToken;
+      session.provider = token.provider;
       return session;
     },
     async authorized({ auth }) {
@@ -32,5 +34,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }
   }
 })
-
 
