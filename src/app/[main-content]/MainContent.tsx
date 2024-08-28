@@ -116,7 +116,7 @@ export default function MainContent() {
   }
 
   const downloadCertificate = () => {
-    if (!certificate) {
+    if (!certificate || certificate == "Invalid Public Key") {
       console.error("No certificate available to download");
       return;
     }
