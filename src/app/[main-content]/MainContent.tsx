@@ -115,6 +115,22 @@ export default function MainContent() {
     }
   }
 
+  const downloadCertificate = () => {
+    if (!certificate) {
+      console.error("No certificate available to download");
+      return;
+    }
+
+    const blob = new Blob([certificate], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'ssh-cert.pub'); // Set the desired file name
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
   if (session.status == "loading") {
     return <Loading />
   }
@@ -180,7 +196,7 @@ export default function MainContent() {
         <div className="w-3/4">
           <Label className="text-3xl">Get Certificate Here</Label>
           <Textarea className="my-8 text-sm h-36" readOnly value={certificate} placeholder="Upload your public key to be signed" />
-          {/* <Button>Download Certificate</Button> */}
+          <Button onClick={downloadCertificate}>Download Certificate</Button>
         </div>
         <Separator className="my-16 w-4/5 bg-black" />
         <div className="w-3/4 flex justify-around">
