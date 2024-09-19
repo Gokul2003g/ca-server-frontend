@@ -200,8 +200,8 @@ export default function MainContent() {
         </div>
         <Separator className="my-16 w-4/5 bg-black" />
         <div className="w-3/4 flex justify-around">
-          <Button onClick={downloadUserSignKey}>Download User Signing Public Key</Button>
-          <Button onClick={downloadHostSignKey}>Download Host Signing Public Key</Button>
+          <Button onClick={downloadUserSignKey}>Download User Signing Public Key (Hosts Download this)</Button>
+          <Button onClick={downloadHostSignKey}>Download Host Signing Public Key (Users Download this)</Button>
         </div>
       </div >
     </div>
