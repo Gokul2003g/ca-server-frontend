@@ -53,17 +53,29 @@ export default function MainContent() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!session || !session.data.idToken) {
+    if (!session) {
+      console.error("Session is empty");
+      return;
+    }
+
+    if (!session.data) {
+      console.error("Session data is empty");
+      return;
+    }
+    // @ts-ignore
+    if (!session.data.idToken) {
       console.error("User is not authenticated");
       return;
     }
 
     values.identity = userEmail || "not_set";
+    // @ts-ignore
     values.provider = session.data.provider;
 
     try {
       const response = await axios.post(SERVER_URI + "handle-post/", values, {
         headers: {
+          // @ts-ignore
           'Authorization': `Bearer ${session.data.idToken}`,
           'Content-Type': 'application/json'
         }

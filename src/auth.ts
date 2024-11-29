@@ -17,6 +17,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // TODO: Rename token variable names 
     async jwt({ token, account, user }) {
       if (account) {
+        // @ts-ignore
         token.idToken = account.access_token;
         token.provider = account.provider;
       }
@@ -24,7 +25,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       // Include access token in the session object
+      // @ts-ignore
       session.idToken = token.idToken;
+      // @ts-ignore
       session.provider = token.provider;
       return session;
     },
